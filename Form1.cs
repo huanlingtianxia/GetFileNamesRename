@@ -150,6 +150,7 @@ namespace  GetFileNamesRename
             //string[] str1 = data.Split();
             if (_sourceName.StartsWith("*") || _sourceName.EndsWith("*"))
                 ;
+
             return true;
         }
         
