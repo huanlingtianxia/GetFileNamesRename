@@ -57,7 +57,11 @@ namespace  GetFileNamesRename
 
         private void Btn_Replace_Click(object sender, EventArgs e)// Btn_Replace : 文件名 替换
         {
-            ReplaceFile();
+            if(ReplaceFile())
+            {
+                _searchFileName = _replaceName;
+                UpdateControl();
+            }
             SerachFile();
         }
 
@@ -153,7 +157,7 @@ namespace  GetFileNamesRename
         }
         
         // 文件名替换
-        private void ReplaceFile()
+        private bool ReplaceFile()
         {
             bool remaneSuc = false;
             try
@@ -163,7 +167,7 @@ namespace  GetFileNamesRename
                 if (string.IsNullOrEmpty(_pathName) || filesNameList.Count == 0 || _sourceName == "")
                 {
                     MessageBox.Show("参数异常！请检查\r\n" + " 文件路径、搜索字符串，原名字符串", "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    return;
+                    return remaneSuc;
                 }
                 //test
                 //if(Test01())
@@ -186,8 +190,9 @@ namespace  GetFileNamesRename
                 }
                 if (remaneSuc == false)
                     MessageBox.Show("重命名失败！", "失败", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return remaneSuc;
             }
-            catch{ MessageBox.Show("重命名失败！", "失败", MessageBoxButtons.OK, MessageBoxIcon.Exclamation); }
+            catch{ MessageBox.Show("重命名失败！", "失败", MessageBoxButtons.OK, MessageBoxIcon.Exclamation); return remaneSuc; }
            
         }
 
