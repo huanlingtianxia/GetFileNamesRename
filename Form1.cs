@@ -146,10 +146,9 @@ namespace  GetFileNamesRename
         private bool Test01()
         {
             //_sourceName.Replace("", "");
-            string data = _sourceName.Trim('*');
             //string[] str1 = data.Split();
-            if (_sourceName.StartsWith("*") || _sourceName.EndsWith("*"))
-                ;
+            //if (_sourceName.StartsWith("*") || _sourceName.EndsWith("*"))
+            //    ;
 
             return true;
         }
@@ -170,6 +169,16 @@ namespace  GetFileNamesRename
                 //test
                 //if(Test01())
                 //    return;
+
+                //打印 确认信息
+                string printfStr = string.Empty;
+                foreach (var fileName in filesNameList)
+                {
+                    printfStr += (GetVagueString(fileName, _sourceName) ?? null) + "---->" + (GetVagueString(fileName, _sourceName, _replaceName) ?? null) + "\r\n";
+                }
+                if ((int)MessageBox.Show("原名 ----> 替换名" + "\r\n" + printfStr, "待确认", MessageBoxButtons.OKCancel, MessageBoxIcon.None) != 1)
+                    return remaneSuc;
+
 
                 string searchName = string.Empty;// 搜索文件名称
                 string replaceName = string.Empty; // 替换字符串

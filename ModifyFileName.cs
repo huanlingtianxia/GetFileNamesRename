@@ -37,7 +37,6 @@ namespace GetFileNamesRename
             catch(Exception e)
             {
                 MessageBox.Show("重命名失败原因：\r\n" + e.ToString(), "原因", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                e.ToString();
                 return false;
             }
 
