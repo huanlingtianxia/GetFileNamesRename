@@ -58,10 +58,7 @@ namespace  GetFileNamesRename
         private void Btn_Replace_Click(object sender, EventArgs e)// Btn_Replace : 文件名 替换
         {
             if(ReplaceFile())
-            {
-                _searchFileName = _replaceName;
-                UpdateControl();
-            }
+                TxtB_SearchName.Text = TxtB_ReplaceName.Text;
             SerachFile();
         }
 
