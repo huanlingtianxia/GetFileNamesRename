@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="debug\CDebugLog.cs" />
+    <Compile Include="debug\Class1TestGit.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
