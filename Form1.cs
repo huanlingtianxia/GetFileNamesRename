@@ -280,7 +280,7 @@ namespace  GetFileNamesRename
 
         public void Preview_CloseForm()
         {
-            if ((int)MessageBox.Show("是否执行 Preview 中的操作", "待确认", MessageBoxButtons.OKCancel, MessageBoxIcon.None) != 1)
+            if ((int)MessageBox.Show("是否执行 Preview 中的操作", "待确认", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) != 1)
                 return;
 
             switch (_prevType)
@@ -458,7 +458,7 @@ namespace  GetFileNamesRename
                 return;
 
 
-            RunPrevEvent(count, "old name " + " ----> " + "new name" + "\r\n");
+            RunPrevEvent(count, $"old name{string.Empty, -200}  ----> new name\r\n");
             foreach (var fileName in filesNameList)
             {
 
@@ -469,22 +469,17 @@ namespace  GetFileNamesRename
                     serialNumber++;
                     suffix += serialNumber.ToString();
                 }
-
+                count++;
                 if (!_replaceName.StartsWith("*") && !_replaceName.EndsWith("*"))
                 {
-                    count++;
                     replaceName = RepalceName_Ctrl + suffix + Path.GetExtension(fileName);
-                    RunPrevEvent(count, fileName + " ----> " + replaceName);
                 }
                 else if (_replaceName.StartsWith("*") && _replaceName.EndsWith("*"))
                 {
-                    count++;
                     replaceName = fileName.Replace(_sourceName.Trim('*'), _replaceName.Trim('*'));
                     fileOlny = replaceName.Substring(0, replaceName.LastIndexOf("."));
-                    replaceName = fileOlny + suffix + Path.GetExtension(fileName);
-                    RunPrevEvent(count, fileName + " ----> " + replaceName);
                 }
-
+                RunPrevEvent(count, $"{fileName,-120} ----> {replaceName}");
                 suffix = string.Empty;
                 _DictionnaryList.Add(fileName, replaceName);
             }
@@ -499,7 +494,7 @@ namespace  GetFileNamesRename
             List<string> filesNameList = GetFiles(Path_Ctrl, SourceName_Ctrl);
 
             _DictionnaryList.Clear();
-            RunPrevEvent(count, "old name " + " ----> " + "new name" + "\r\n");
+            RunPrevEvent(count, $"old name{string.Empty,-200}  ----> new name\r\n");
             foreach (var fileName in filesNameList)
             {
                 string reName = string.Empty;
@@ -521,7 +516,7 @@ namespace  GetFileNamesRename
                 count++;
                 reName += extension;
 
-                RunPrevEvent(count, fileName + " ----> " + reName);
+                RunPrevEvent(count, $"{fileName,-120} ----> {reName}");
                 _DictionnaryList.Add(fileName, reName);
             }
             _prevType = PrevType.DELETE;
@@ -539,14 +534,14 @@ namespace  GetFileNamesRename
                 UpdateControl();
                 List<string> filesNameList = GetFiles(Path_Ctrl, SourceName_Ctrl);
 
-                RunPrevEvent(count, "old name " + " ----> " + "new name" + "\r\n");
+                RunPrevEvent(count, $"old name{string.Empty,-200}  ----> new name\r\n");
                 foreach (var fileName in filesNameList)
                 {
                     string reName = string.Empty;
                     string extension = Path.GetExtension(fileName);//扩展名
                     string fileOlny = fileName.Substring(0, fileName.LastIndexOf("."));
                     reName = fileOlny + "." + Extension_Ctrl;
-                    RunPrevEvent(count, fileName + " ----> " + reName);
+                    RunPrevEvent(count, $"{fileName,-120} ----> {reName}");
                 }
 
                 _prevType = PrevType.EXTENSION;

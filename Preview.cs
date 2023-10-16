@@ -28,6 +28,8 @@ namespace GetFileNamesRename
         private void Init()
         {
             _form1.PrevDataEvent += new PrevDataDeltage(ReceiveData);
+            //richTextBox1.Font = new Font("Courier New", 8.25f);
+
 
         }
 

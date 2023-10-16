@@ -68,7 +68,6 @@ namespace  GetFileNamesRename
             this.ComB_Order = new System.Windows.Forms.ComboBox();
             this.Lba_ToSearch = new System.Windows.Forms.Label();
             this.Lab_ToSource = new System.Windows.Forms.Label();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.panel2 = new System.Windows.Forms.Panel();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.panel1.SuspendLayout();
@@ -271,7 +270,6 @@ namespace  GetFileNamesRename
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.Btn_SetExtension);
             this.panel1.Controls.Add(this.TxtB_ExtensionName);
-            this.panel1.Controls.Add(this.menuStrip1);
             this.panel1.Location = new System.Drawing.Point(12, 3);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1183, 152);
@@ -280,21 +278,23 @@ namespace  GetFileNamesRename
             // Lab_SubtractStar
             // 
             this.Lab_SubtractStar.AutoSize = true;
-            this.Lab_SubtractStar.Location = new System.Drawing.Point(502, 69);
+            this.Lab_SubtractStar.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.Lab_SubtractStar.Location = new System.Drawing.Point(485, 69);
             this.Lab_SubtractStar.Name = "Lab_SubtractStar";
-            this.Lab_SubtractStar.Size = new System.Drawing.Size(14, 13);
+            this.Lab_SubtractStar.Size = new System.Drawing.Size(36, 15);
             this.Lab_SubtractStar.TabIndex = 17;
-            this.Lab_SubtractStar.Text = "-*";
+            this.Lab_SubtractStar.Text = "Rep-*";
             this.Lab_SubtractStar.Click += new System.EventHandler(this.Lab_SubtractStar_Click);
             // 
             // Lab_AddStar
             // 
             this.Lab_AddStar.AutoSize = true;
-            this.Lab_AddStar.Location = new System.Drawing.Point(477, 67);
+            this.Lab_AddStar.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.Lab_AddStar.Location = new System.Drawing.Point(439, 69);
             this.Lab_AddStar.Name = "Lab_AddStar";
-            this.Lab_AddStar.Size = new System.Drawing.Size(17, 13);
+            this.Lab_AddStar.Size = new System.Drawing.Size(39, 15);
             this.Lab_AddStar.TabIndex = 17;
-            this.Lab_AddStar.Text = "+*";
+            this.Lab_AddStar.Text = "Rep+*";
             this.Lab_AddStar.Click += new System.EventHandler(this.Lab_AddStar_Click);
             // 
             // Btn_DeletePartName
@@ -476,14 +476,6 @@ namespace  GetFileNamesRename
             this.Lab_ToSource.Text = "-------->";
             this.Lab_ToSource.Click += new System.EventHandler(this.Lab_ToSource_Click);
             // 
-            // menuStrip1
-            // 
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1183, 24);
-            this.menuStrip1.TabIndex = 11;
-            this.menuStrip1.Text = "menuStrip1";
-            // 
             // panel2
             // 
             this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -505,7 +497,6 @@ namespace  GetFileNamesRename
             this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
-            this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -551,7 +542,6 @@ namespace  GetFileNamesRename
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.NumericUpDown NumericUpD_SerialNumber;
         private System.Windows.Forms.Label Lab_ReplaceName;
         private System.Windows.Forms.TextBox TxtB_DeletePartName;
