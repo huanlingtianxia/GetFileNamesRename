@@ -71,6 +71,7 @@ namespace  GetFileNamesRename
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.panel2 = new System.Windows.Forms.Panel();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.Btn_PopVideo = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NumericUpD_SerialNumber)).BeginInit();
             this.SuspendLayout();
@@ -238,6 +239,7 @@ namespace  GetFileNamesRename
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.Btn_PopVideo);
             this.panel1.Controls.Add(this.Lab_SubtractStar);
             this.panel1.Controls.Add(this.Lab_AddStar);
             this.panel1.Controls.Add(this.Btn_DeletePartName);
@@ -496,6 +498,16 @@ namespace  GetFileNamesRename
             this.panel2.Size = new System.Drawing.Size(1183, 631);
             this.panel2.TabIndex = 5;
             // 
+            // Btn_PopVideo
+            // 
+            this.Btn_PopVideo.Location = new System.Drawing.Point(923, 123);
+            this.Btn_PopVideo.Name = "Btn_PopVideo";
+            this.Btn_PopVideo.Size = new System.Drawing.Size(125, 26);
+            this.Btn_PopVideo.TabIndex = 18;
+            this.Btn_PopVideo.Text = "PopVideoDetail";
+            this.Btn_PopVideo.UseVisualStyleBackColor = true;
+            this.Btn_PopVideo.Click += new System.EventHandler(this.Btn_PopVideo_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -562,6 +574,7 @@ namespace  GetFileNamesRename
         private System.Windows.Forms.Label Lab_SubtractStar;
         private System.Windows.Forms.Label Lab_AddStar;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.Button Btn_PopVideo;
     }
 }
 

@@ -54,6 +54,14 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormVideoMsg\FormVideoDetail.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormVideoMsg\FormVideoDetail.designer.cs">
+      <DependentUpon>FormVideoDetail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormVideoMsg\GetFilesMessage.cs" />
+    <Compile Include="FormVideoMsg\TraverseClassAttributes.cs" />
     <Compile Include="IniReader\IniReader.cs" />
     <Compile Include="Preview.cs">
       <SubType>Form</SubType>
@@ -68,6 +76,9 @@
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormVideoMsg\FormVideoDetail.resx">
+      <DependentUpon>FormVideoDetail.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Preview.resx">
       <DependentUpon>Preview.cs</DependentUpon>
     </EmbeddedResource>
@@ -81,7 +92,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="IniReader\FileConfig.ini" />
+    <None Include="IniReader\FileConfig.ini">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -94,6 +107,17 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="Shell32">
+      <Guid>{50A7E9B0-70EF-11D1-B75A-00A0C90564FE}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

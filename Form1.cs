@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Globalization;
 using Syntronic.IniReader;
+using GetVideoDetails;
 
 namespace  GetFileNamesRename
 {
@@ -65,6 +66,7 @@ namespace  GetFileNamesRename
 
         Form1 form1;
         private static Preview preview;
+        private static FormVideoDetail formVideoDetail;
         private string _pathName = string.Empty; // folder path
         private string _sourceName = string.Empty; // source name
         private string _replaceName = string.Empty; // replace name
@@ -87,6 +89,7 @@ namespace  GetFileNamesRename
         {
             form1 = new Form1();
             preview = new Preview(form1);// init
+            formVideoDetail = new FormVideoDetail();
             //preview.FormClosed += Preview_FormClosed;
             //preview.CloseFormMsgEvent -= Preview_CloseForm;
             preview.CloseFormMsgEvent += Preview_CloseForm;
@@ -132,6 +135,12 @@ namespace  GetFileNamesRename
             OpenDialog(preview);
             SetExtension();
         }
+        // pop video from
+        private void Btn_PopVideo_Click(object sender, EventArgs e)
+        {
+            if(preview!=null)
+                formVideoDetail.ShowDialog();
+        }
         #endregion == button ==
         // text
         private void TxtB_Format_KeyDown(object sender, KeyEventArgs e) // search files Enter function
@@ -139,7 +148,6 @@ namespace  GetFileNamesRename
             if (e.KeyCode == Keys.Enter)
                 SerachFile();
         }
-
         //label
         #region == label ==
         private void Lab_ToSource_Click(object sender, EventArgs e) // Label search to source
@@ -933,6 +941,7 @@ namespace  GetFileNamesRename
 
             restartCurrentSW.Execute();
         }
+
         #endregion ============  test Ericsson merge platform =============
 
 
