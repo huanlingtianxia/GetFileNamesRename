@@ -280,9 +280,10 @@ namespace  GetFileNamesRename
             // Lab_SubtractStar
             // 
             this.Lab_SubtractStar.AutoSize = true;
+            this.Lab_SubtractStar.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.Lab_SubtractStar.Location = new System.Drawing.Point(502, 69);
             this.Lab_SubtractStar.Name = "Lab_SubtractStar";
-            this.Lab_SubtractStar.Size = new System.Drawing.Size(14, 13);
+            this.Lab_SubtractStar.Size = new System.Drawing.Size(16, 15);
             this.Lab_SubtractStar.TabIndex = 17;
             this.Lab_SubtractStar.Text = "-*";
             this.Lab_SubtractStar.Click += new System.EventHandler(this.Lab_SubtractStar_Click);
@@ -290,9 +291,10 @@ namespace  GetFileNamesRename
             // Lab_AddStar
             // 
             this.Lab_AddStar.AutoSize = true;
-            this.Lab_AddStar.Location = new System.Drawing.Point(477, 67);
+            this.Lab_AddStar.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Lab_AddStar.Location = new System.Drawing.Point(477, 69);
             this.Lab_AddStar.Name = "Lab_AddStar";
-            this.Lab_AddStar.Size = new System.Drawing.Size(17, 13);
+            this.Lab_AddStar.Size = new System.Drawing.Size(19, 15);
             this.Lab_AddStar.TabIndex = 17;
             this.Lab_AddStar.Text = "+*";
             this.Lab_AddStar.Click += new System.EventHandler(this.Lab_AddStar_Click);
