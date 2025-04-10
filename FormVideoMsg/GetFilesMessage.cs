@@ -91,7 +91,7 @@ namespace GetVideoDetails
                     return mediaLength;
                 }
             }
-            catch (Exception ex) { return null; }
+            catch (Exception ex) { ex.ToString(); return null; }
         }
         #endregion
 

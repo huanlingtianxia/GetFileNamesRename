@@ -42,6 +42,8 @@
             // 
             // textB_VideoPath
             // 
+            this.textB_VideoPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textB_VideoPath.Location = new System.Drawing.Point(81, 9);
             this.textB_VideoPath.Name = "textB_VideoPath";
             this.textB_VideoPath.Size = new System.Drawing.Size(573, 20);
@@ -58,6 +60,8 @@
             // 
             // textB_OutputFilePath
             // 
+            this.textB_OutputFilePath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textB_OutputFilePath.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.textB_OutputFilePath.Location = new System.Drawing.Point(81, 35);
             this.textB_OutputFilePath.Name = "textB_OutputFilePath";
@@ -75,6 +79,7 @@
             // 
             // btn_SelectVideoPath
             // 
+            this.btn_SelectVideoPath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btn_SelectVideoPath.Location = new System.Drawing.Point(659, 9);
             this.btn_SelectVideoPath.Name = "btn_SelectVideoPath";
             this.btn_SelectVideoPath.Size = new System.Drawing.Size(75, 23);
@@ -85,6 +90,7 @@
             // 
             // btn_SelectOutputPath
             // 
+            this.btn_SelectOutputPath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btn_SelectOutputPath.Location = new System.Drawing.Point(659, 33);
             this.btn_SelectOutputPath.Name = "btn_SelectOutputPath";
             this.btn_SelectOutputPath.Size = new System.Drawing.Size(75, 23);
@@ -95,6 +101,7 @@
             // 
             // btn_CreatFile
             // 
+            this.btn_CreatFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btn_CreatFile.Location = new System.Drawing.Point(659, 62);
             this.btn_CreatFile.Name = "btn_CreatFile";
             this.btn_CreatFile.Size = new System.Drawing.Size(75, 23);
@@ -105,6 +112,9 @@
             // 
             // richTB_Log
             // 
+            this.richTB_Log.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.richTB_Log.Location = new System.Drawing.Point(2, 91);
             this.richTB_Log.Name = "richTB_Log";
             this.richTB_Log.Size = new System.Drawing.Size(732, 195);
@@ -121,7 +131,7 @@
             this.label3.TabIndex = 2;
             this.label3.Text = "Log";
             // 
-            // Form1
+            // FormVideoDetail
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -135,7 +145,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textB_OutputFilePath);
             this.Controls.Add(this.textB_VideoPath);
-            this.Name = "Form1";
+            this.Name = "FormVideoDetail";
             this.Text = "Form1";
             this.ResumeLayout(false);
             this.PerformLayout();

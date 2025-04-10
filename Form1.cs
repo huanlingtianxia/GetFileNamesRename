@@ -42,6 +42,15 @@ namespace  GetFileNamesRename
             catch(Exception ex) { ex.ToString(); }
 
         }
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            form1 = new Form1();
+            preview = new Preview(form1);// init
+            formVideoDetail = new FormVideoDetail();
+            //preview.FormClosed += Preview_FormClosed;
+            //preview.CloseFormMsgEvent -= Preview_CloseForm;
+            preview.CloseFormMsgEvent += Preview_CloseForm;
+        }
 
         #region ================== delegate event ====================
         public string PreData = string.Empty;
@@ -53,7 +62,6 @@ namespace  GetFileNamesRename
 
         #endregion #region ================== delegate event ====================
 
-
         #region ================== parameter define ====================
         public enum PrevType
         {
@@ -64,12 +72,13 @@ namespace  GetFileNamesRename
             EXTENSION = 4,
         }
 
-        Form1 form1;
+        private Form1 form1;
         private static Preview preview;
         private static FormVideoDetail formVideoDetail;
         private string _pathName = string.Empty; // folder path
         private string _sourceName = string.Empty; // source name
         private string _replaceName = string.Empty; // replace name
+        private bool _enableCtrl = false;
 
         private PrevType _prevType = new PrevType();
         private Dictionary<string,string> _DictionnaryList = new Dictionary<string,string>();
@@ -77,26 +86,25 @@ namespace  GetFileNamesRename
         //private int _filesCount = -1;
 
         private GetModifyFile _getModifyFile = new GetModifyFile(); // modify files
-        //private CDebugLog _debug = new CDebugLog(); // print log     
+                                                                    //private CDebugLog _debug = new CDebugLog(); // print log     
 
         #endregion ================== parameter define ====================
 
-
         #region  ================= Control Event ====================
-        private bool _enableCtrl = false;
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            form1 = new Form1();
-            preview = new Preview(form1);// init
-            formVideoDetail = new FormVideoDetail();
-            //preview.FormClosed += Preview_FormClosed;
-            //preview.CloseFormMsgEvent -= Preview_CloseForm;
-            preview.CloseFormMsgEvent += Preview_CloseForm;
-        }
 
         // button
         #region == button ==
+        // pop video from
+        private void Btn_PopVideo_Click(object sender, EventArgs e)
+        {
+            if (preview != null)
+                formVideoDetail.ShowDialog();
+        }
+        private void Btn_SelectFullPath_Click(object sender, EventArgs e)//bBtn_SelectFullPath :select folder
+        {
+            SelectFullPath();
+        }
         private void Btn_GetFileName_Click(object sender, EventArgs e) //Btn_GetFileName : get all files in folder
         {
             RestartCurrentSWFun();//test Ericsson merge platform
@@ -106,50 +114,29 @@ namespace  GetFileNamesRename
         {
             OpenDialog(preview);
             ReplaceFileName();
-            //string fileName = @"E:\Test\SearchFilesTest\2222dacnamic_330_330.dll";
-            //string searchName1 = "330_330";
-            //string replaceName1 = "";
-
-
-            //_getModifyFile.ChangeFileName(fileName, searchName1, replaceName1);// 替换文件名中的部分文件
-            //ReplaceFile();
-            //else
-            //    preview.Close();
-
-            //SerachFile();
-
-            // preview
-
         }
-        private void Btn_DeletePartName_Click(object sender, EventArgs e) // delete part name
+        private async void Btn_DeletePartName_Click(object sender, EventArgs e) // delete part name
         {
             OpenDialog(preview);
-            DeletePartName();
+            await Task.Run(() =>
+            {
+                DeletePartName();
+            });
         }
-        private void Btn_SelectFullPath_Click(object sender, EventArgs e)//bBtn_SelectFullPath :select folder
-        {
-            SelectFullPath();
-        }
-        private void Btn_SetExtension_Click(object sender, EventArgs e) //Btn_SetExtension : set suffix
+        private async void Btn_SetExtension_Click(object sender, EventArgs e) //Btn_SetExtension : set suffix
         {
             OpenDialog(preview);
-            SetExtension();
+            await Task.Run(() =>
+            {
+                SetExtension();
+            });
         }
-        // pop video from
-        private void Btn_PopVideo_Click(object sender, EventArgs e)
-        {
-            if(preview!=null)
-                formVideoDetail.ShowDialog();
-        }
+
         #endregion == button ==
-        // text
-        private void TxtB_Format_KeyDown(object sender, KeyEventArgs e) // search files Enter function
-        {
-            if (e.KeyCode == Keys.Enter)
-                SerachFile();
-        }
+
+
+        #region == label + Text + ComBox ==
         //label
-        #region == label ==
         private void Lab_ToSource_Click(object sender, EventArgs e) // Label search to source
         {
             TxtB_SourceName.Text = TxtB_SearchName.Text;
@@ -170,16 +157,23 @@ namespace  GetFileNamesRename
         {
             RepalceName_Ctrl = RepalceName_Ctrl.Trim('*');
         }
-        #endregion == label ==
+        // text
+        private void TxtB_Format_KeyDown(object sender, KeyEventArgs e) // search files Enter function
+        {
+            if (e.KeyCode == Keys.Enter)
+                SerachFile();
+        }
         //combox
         private void ComB_Order_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (_enableCtrl)
                 SerachFile();
         }
+        #endregion == label ==
 
-        // hovering show
+
         #region == hovering show ==
+        // hovering show
         private void TxtB_ReplaceName_MouseMove(object sender, MouseEventArgs e) // hovering show
         {
             toolTip1.SetToolTip(TxtB_ReplaceName, $"搜索出包含 \"{SourceName_Ctrl}\" 字符的文件，并将该文件的 \"{SourceName_Ctrl}\" 字符 替换为 \"{ReplaceName_Ctrl}\"字符. 替换规则如下：\r\n" +
@@ -227,7 +221,7 @@ namespace  GetFileNamesRename
         }
         private string SearchMode_Ctrl
         {
-            get => ComB_SearchMode.Text;
+            get => GetControlTextSafe(ComB_SearchMode);
             set => ComB_SearchMode.Text = value;
         }
         private string Path_Ctrl
@@ -242,7 +236,7 @@ namespace  GetFileNamesRename
         }
         private string SortOrder_Ctrl
         {
-            get => ComB_Order.Text;
+            get => GetControlTextSafe(ComB_Order);
             set => ComB_Order.Text = value;
         }
 
@@ -286,11 +280,13 @@ namespace  GetFileNamesRename
 
         #region ================= Form ====================
 
-        public void Preview_CloseForm()
+        public async void Preview_CloseForm()
         {
             if ((int)MessageBox.Show("是否执行 Preview 中的操作", "待确认", MessageBoxButtons.OKCancel, MessageBoxIcon.None) != 1)
                 return;
-
+            string path = Path_Ctrl;
+            string extension = Extension_Ctrl;
+            string sourceName = SourceName_Ctrl;
             switch (_prevType)
             {
                 case PrevType.UNDEFINE:    break;
@@ -298,11 +294,14 @@ namespace  GetFileNamesRename
 
                 case PrevType.DELETE:
                 case PrevType.REPLACE:
+                    await Task.Run(() =>
+                    {
+                        foreach (var fileName in _DictionnaryList)
+                        {
+                            _getModifyFile.ChangeFileName(path + "\\" + fileName.Key, fileName.Key, fileName.Value);
+                        }
+                    });
 
-                    foreach (var fileName in _DictionnaryList)
-                    { 
-                        _getModifyFile.ChangeFileName(Path_Ctrl + "\\" + fileName.Key, fileName.Key, fileName.Value);
-                    }
                     break;
 
                 //case PrevType.REPLACE: break;
@@ -310,8 +309,11 @@ namespace  GetFileNamesRename
                 case PrevType.EXTENSION:
                     GetModifyFile.SortOrder or = (GetModifyFile.SortOrder)Enum.Parse(typeof(GetModifyFile.SortOrder), SortOrder_Ctrl);
                     SearchOption so = (SearchOption)Enum.Parse(typeof(SearchOption), SearchMode_Ctrl);
-
-                    _getModifyFile.SetExtensionName(Extension_Ctrl, Path_Ctrl, SourceName_Ctrl, or, so);
+                    await Task.Run(() =>
+                    {
+                        _getModifyFile.SetExtensionName(extension, path, sourceName, or, so);
+                    });
+                    
                     break;
 
                 default: break;
@@ -388,12 +390,60 @@ namespace  GetFileNamesRename
         #region ================== private function =====================
         // fun
         // Update 控件
+
+        //ComboBox
+
+        public string GetControlTextSafe(Control control)
+        {
+            if (control.InvokeRequired)
+            {
+                return (string)control.Invoke(new Func<string>(() => control.Text));
+            }
+            else
+            {
+                return control.Text;
+            }
+        }
+        public void SetControlValueSmart(Control control, string text, bool clear = false)
+        {
+            if (control.InvokeRequired)
+            {
+                control.Invoke(new Action(() =>
+                {
+                    if (control is RichTextBox richTB)
+                    {
+                        if (clear)
+                            richTB.Clear();
+                        richTB.AppendText(text); // RichTextBox 用追加
+                    }
+                    else
+                    {
+                        control.Text = text; // 其他控件直接赋值
+                    }
+                }));
+            }
+            else
+            {
+                if (control is RichTextBox richTB)
+                {
+                    if (clear)
+                        richTB.Clear();
+                    richTB.AppendText(text); // RichTextBox 用追加
+                }
+                else
+                {
+                    control.Text = text; // 其他控件直接赋值
+                }
+            }
+        }
+
+
         private void UpdateControl()
         {
             _pathName = Path_Ctrl; // 文件夹路径
             _sourceName = SourceName_Ctrl; // 原名（被替换名）
             _replaceName = ReplaceName_Ctrl; // 替换名
-    }
+        }
 
         // set RichText control
         private void SetRichText(List<string> list)
@@ -410,13 +460,16 @@ namespace  GetFileNamesRename
                 _getModifyFile.ExtractAllFileName(Path_Ctrl + @"\" + ReplaceName_Ctrl, richTextBox1.Text); // extract file name
         }
         // get files
-        private List<string> GetFiles(string path, string search)
+        private async Task<List<string>> GetFiles(string path, string search)
         {
             UpdateControl();
-            List<string> filesNameList;
+            List<string> filesNameList = null;
             GetModifyFile.SortOrder or = (GetModifyFile.SortOrder)Enum.Parse(typeof(GetModifyFile.SortOrder), SortOrder_Ctrl);
             SearchOption so = (SearchOption)Enum.Parse(typeof(SearchOption), SearchMode_Ctrl);
-            filesNameList = _getModifyFile.GetAllFileNames(path, search, or, so).Select(x => x.Name).ToList();
+            await Task.Run(() =>
+            {
+                filesNameList = _getModifyFile.GetAllFileNames(path, search, or, so).Select(x => x.Name).ToList();
+            });
             if (string.IsNullOrEmpty(path) || filesNameList.Count == 0 || search == "")
             {
                 MessageBox.Show("参数异常！请检查\r\n" + " 文件路径、搜索字符串，原名字符串", "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -424,8 +477,7 @@ namespace  GetFileNamesRename
             return filesNameList;
         }
 
-        // file fuzzy search
-        private void SerachFile()
+        private async void SerachFile()
         {
             try
             {
@@ -433,8 +485,11 @@ namespace  GetFileNamesRename
 
                 if (string.IsNullOrEmpty(Path_Ctrl))
                     return;
+                List<string> filesNameList = null;
+                string path = Path_Ctrl;
+                string sourceName = SourceName_Ctrl;
+                filesNameList = await GetFiles(path, sourceName);
 
-                List<string> filesNameList = GetFiles(Path_Ctrl, SourceName_Ctrl);
                 SetRichText(filesNameList);
 
                 GetModifyFile.Ini_Parameter ini_Parameter = new GetModifyFile.Ini_Parameter();
@@ -452,14 +507,14 @@ namespace  GetFileNamesRename
         }
 
         // replace
-        private void ReplaceFileName()
+        private async void ReplaceFileName()
         {
             int count = 0;
             int serialNumber = SerialNumber_Ctrl - 1;
             string replaceName = string.Empty;
             string fileOlny = string.Empty;
             string suffix = string.Empty;
-            List<string> filesNameList = GetFiles(Path_Ctrl, SourceName_Ctrl);
+            List<string> filesNameList = await GetFiles(Path_Ctrl, SourceName_Ctrl);
             _DictionnaryList.Clear();
 
             if (RepalceName_Ctrl == "" || SourceName_Ctrl == "")
@@ -497,10 +552,12 @@ namespace  GetFileNamesRename
         }
 
         // delete part name
-        private void DeletePartName()
+        private async void DeletePartName()
         {
             int count = 0;
-            List<string> filesNameList = GetFiles(Path_Ctrl, SourceName_Ctrl);
+            string path = Path_Ctrl;
+            string sourceName = SourceName_Ctrl;
+            List<string> filesNameList = await GetFiles(path, sourceName);
 
             _DictionnaryList.Clear();
             RunPrevEvent(count, $"old name{string.Empty, -200}  ----> new name\r\n");
@@ -532,7 +589,7 @@ namespace  GetFileNamesRename
         }
 
         // set suffix
-        private void SetExtension()
+        private async void SetExtension()
         {
             if (Extension_Ctrl == "" || SourceName_Ctrl == "")
                 return;
@@ -541,7 +598,9 @@ namespace  GetFileNamesRename
             {
                 int count = 0;
                 UpdateControl();
-                List<string> filesNameList = GetFiles(Path_Ctrl, SourceName_Ctrl);
+                string path = Path_Ctrl;
+                string sourceName = SourceName_Ctrl;
+                List<string> filesNameList = await GetFiles(path, sourceName);
 
                 RunPrevEvent(count, $"old name{string.Empty, -200}  ----> new name\r\n");
                 foreach (var fileName in filesNameList)
@@ -550,6 +609,7 @@ namespace  GetFileNamesRename
                     string extension = Path.GetExtension(fileName);//扩展名
                     string fileOlny = fileName.Substring(0, fileName.LastIndexOf("."));
                     reName = fileOlny + "." + Extension_Ctrl;
+                    count++;
                     RunPrevEvent(count, $"{fileName,-120} ----> {reName}");
                 }
 
@@ -560,7 +620,7 @@ namespace  GetFileNamesRename
                 //_getModifyFile.SetExtensionName(Extension_Ctrl, Path_Ctrl, SourceName_Ctrl, or, so);
 
             }
-            catch { }
+            catch(Exception ex) { ex.ToString(); }
         }
         // select path
         private void SelectFullPath()
@@ -607,7 +667,7 @@ namespace  GetFileNamesRename
                 string searchName1 = string.Empty;// 搜索文件名称
                 string replaceName1 = string.Empty; // 替换字符串
                 string sourcePathName1 = string.Empty;// 原文件全路径
-                bool remaneSuc = false;
+                //bool remaneSuc = false;
 
                 UpdateControl();
 

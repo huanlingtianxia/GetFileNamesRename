@@ -33,8 +33,9 @@ namespace GetVideoDetails
             _tB_VideoPath.Text = GetFiles.Ini_VideoParam.PathSource;
             _tB_OutputFilePath.Text = GetFiles.Ini_VideoParam.PathOut;
         }
-
+        //private nember
         private GetFilesMessage _getFiles;
+        
         //Property
         internal GetFilesMessage GetFiles
         {
@@ -49,27 +50,27 @@ namespace GetVideoDetails
         }
         private TextBox _tB_VideoPath { get; set; }
         private TextBox _tB_OutputFilePath { get; set; }
-       
-
-        /*private TraverseClassAttributes _traverseClassAttributes = new TraverseClassAttributes();*/
 
         // button
         private void btn_SelectVideoPath_Click(object sender, EventArgs e)
         {
             textB_VideoPath.Text = SelectPath();
         }
-
         private void btn_SelectOutputPath_Click(object sender, EventArgs e)
         {
             textB_OutputFilePath.Text = SelectPath();
         }
-
-        private void btn_CreatFile_Click(object sender, EventArgs e)
+        private async void btn_CreatFile_Click(object sender, EventArgs e)
         {
             //_traverseClassAttributes.TestTraverseObject();
             richTB_Log.Text = "";
             string msg = string.Empty;
-            GetFiles.GetFilesMsg(_tB_VideoPath.Text, _tB_OutputFilePath.Text, ref msg);
+            await Task.Run(() => 
+            {
+                GetFiles.GetFilesMsg(_tB_VideoPath.Text, _tB_OutputFilePath.Text, ref msg);
+            });
+            
+            //write ini
             GetFiles.Ini_VideoParam.PathSource = _tB_VideoPath.Text;
             GetFiles.Ini_VideoParam.PathOut = _tB_OutputFilePath.Text;
             GetFiles.IniWrite_Data(GetFiles.Ini_VideoParam);
