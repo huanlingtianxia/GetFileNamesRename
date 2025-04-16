@@ -115,21 +115,16 @@ namespace  GetFileNamesRename
             OpenDialog(preview);
             ReplaceFileName();
         }
-        private async void Btn_DeletePartName_Click(object sender, EventArgs e) // delete part name
+        private void Btn_DeletePartName_Click(object sender, EventArgs e) // delete part name
         {
             OpenDialog(preview);
-            await Task.Run(() =>
-            {
-                DeletePartName();
-            });
+            DeletePartName();
+
         }
-        private async void Btn_SetExtension_Click(object sender, EventArgs e) //Btn_SetExtension : set suffix
+        private void Btn_SetExtension_Click(object sender, EventArgs e) //Btn_SetExtension : set suffix
         {
             OpenDialog(preview);
-            await Task.Run(() =>
-            {
-                SetExtension();
-            });
+            SetExtension();
         }
 
         #endregion == button ==
@@ -221,7 +216,7 @@ namespace  GetFileNamesRename
         }
         private string SearchMode_Ctrl
         {
-            get => GetControlTextSafe(ComB_SearchMode);
+            get => ComB_SearchMode.Text;// GetControlTextSafe(ComB_SearchMode);
             set => ComB_SearchMode.Text = value;
         }
         private string Path_Ctrl
@@ -236,7 +231,7 @@ namespace  GetFileNamesRename
         }
         private string SortOrder_Ctrl
         {
-            get => GetControlTextSafe(ComB_Order);
+            get => ComB_Order.Text;//GetControlTextSafe(ComB_Order);
             set => ComB_Order.Text = value;
         }
 
@@ -486,9 +481,7 @@ namespace  GetFileNamesRename
                 if (string.IsNullOrEmpty(Path_Ctrl))
                     return;
                 List<string> filesNameList = null;
-                string path = Path_Ctrl;
-                string sourceName = SourceName_Ctrl;
-                filesNameList = await GetFiles(path, sourceName);
+                filesNameList = await GetFiles(Path_Ctrl, SourceName_Ctrl);
 
                 SetRichText(filesNameList);
 
@@ -555,9 +548,7 @@ namespace  GetFileNamesRename
         private async void DeletePartName()
         {
             int count = 0;
-            string path = Path_Ctrl;
-            string sourceName = SourceName_Ctrl;
-            List<string> filesNameList = await GetFiles(path, sourceName);
+            List<string> filesNameList = await GetFiles(Path_Ctrl, SourceName_Ctrl);
 
             _DictionnaryList.Clear();
             RunPrevEvent(count, $"old name{string.Empty, -200}  ----> new name\r\n");
@@ -598,9 +589,7 @@ namespace  GetFileNamesRename
             {
                 int count = 0;
                 UpdateControl();
-                string path = Path_Ctrl;
-                string sourceName = SourceName_Ctrl;
-                List<string> filesNameList = await GetFiles(path, sourceName);
+                List<string> filesNameList = await GetFiles(Path_Ctrl, SourceName_Ctrl);
 
                 RunPrevEvent(count, $"old name{string.Empty, -200}  ----> new name\r\n");
                 foreach (var fileName in filesNameList)

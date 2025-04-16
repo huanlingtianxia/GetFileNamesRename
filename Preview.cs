@@ -32,10 +32,10 @@ namespace GetFileNamesRename
         }
         private void ReceiveData(int count, string text)
         {
-            _form1.SetControlValueSmart(richTextBox1, text + '\n');
-            _form1.SetControlValueSmart(TxtB_FilesCount, count.ToString());
-            //richTextBox1.AppendText(text + '\n');
-            //TxtB_FilesCount.Text = count.ToString();
+            //_form1.SetControlValueSmart(richTextBox1, text + '\n');
+            //_form1.SetControlValueSmart(TxtB_FilesCount, count.ToString());
+            richTextBox1.AppendText(text + '\n');
+            TxtB_FilesCount.Text = count.ToString();
         }
         private void Preview_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -43,53 +43,10 @@ namespace GetFileNamesRename
             this.Visible = false;
             e.Cancel = true;
             CloseFormMsgEvent();
-            _form1.SetControlValueSmart(richTextBox1, string.Empty, true);
-            //richTextBox1.Clear();
+            //_form1.SetControlValueSmart(richTextBox1, string.Empty, true);
+            richTextBox1.Clear();
 
         }
         
-        private string GetControlTextSafe(Control control)
-        {
-            if (control.InvokeRequired)
-            {
-                return (string)control.Invoke(new Func<string>(() => control.Text));
-            }
-            else
-            {
-                return control.Text;
-            }
-        }
-        private void SetControlValueSmart(Control control, string text, bool clear = false)
-        {
-            if (control.InvokeRequired)
-            {
-                control.Invoke(new Action(() =>
-                {
-                    if (control is RichTextBox richTB)
-                    {
-                        if(clear)
-                            richTB.Clear();
-                        richTB.AppendText(text); // RichTextBox 用追加
-                    }
-                    else
-                    {
-                        control.Text = text; // 其他控件直接赋值
-                    }
-                }));
-            }
-            else
-            {
-                if (control is RichTextBox richTB)
-                {
-                    if (clear)
-                        richTB.Clear();
-                    richTB.AppendText(text); // RichTextBox 用追加
-                }
-                else
-                {
-                    control.Text = text; // 其他控件直接赋值
-                }
-            }
-        }
     }
 }
